@@ -1,0 +1,61 @@
+controller: Handles incoming requests, orchestrates the logic, and returns responses (your API endpoints).
+model: Manages data, including database interactions and data fetching/processing (your db_connector and amazon_scraper).
+util: Contains general utility functions or helpers (your url_checker).
+
+An **MVC-like pattern** refers to an architectural design approach that borrows principles 
+from the traditional **Model-View-Controller (MVC)** pattern, 
+even if it doesn't strictly adhere to every aspect of it. 
+It's about achieving a "separation of concerns" in your code, making it more organized, maintainable, 
+and scalable.
+
+### What is the MVC Pattern?
+
+MVC is a software architectural pattern commonly used for developing user interfaces that divides the related program logic into three interconnected elements:
+
+1.  **Model**:
+    *   **Purpose**: Manages the application's data, business logic, and rules. It represents the core data structure and how data is manipulated.
+    *   **Responsibilities**: Retrieves and manipulates data from the database, contains business rules (like calculations or validation), and acts as an interface between the application's data and the user interface.
+    *   **Example**: In our project, `model/db_connector.py` (handling database interactions) and `model/amazon_scraper.py` (handling data fetching and initial processing) collectively represent the Model.
+
+2.  **View**:
+    *   **Purpose**: Defines how the application's data should be displayed to the user. It's responsible for the presentation layer.
+    *   **Responsibilities**: Displays data from the Model in a presentable format. It does not contain business logic or direct interaction with data storage.
+    *   **Example**: In traditional web applications (like those rendering HTML), the View would be your HTML templates. However, in an API-only application like ours, there's no traditional HTML view. Instead, the "view" is the **JSON response** that the API sends back to the client. The client (e.g., a web browser's JavaScript, a mobile app, or another service) then uses this JSON data to render its own interface.
+
+3.  **Controller**:
+    *   **Purpose**: Acts as an intermediary between the Model and the View. It receives user input, processes it, and decides what the Model and View should do in response.
+    *   **Responsibilities**: Handles incoming requests, validates input, interacts with the Model to fetch or update data, and then passes data to the View for display (or, in an API, directly constructs the response).
+    *   **Example**: In our project, `controller/products_controller.py` (your Flask Blueprint with `@products_bp.route` decorators) serves as the Controller. It receives API requests, calls methods in the `model` (scraper or database connector), and then returns a JSON response.
+
+### Why "MVC-like" and not strict MVC?
+
+Flask is a "microframework," meaning it provides a core set of features but doesn't enforce a rigid structure like some larger frameworks (e.g., Ruby on Rails, Laravel, Django). This flexibility allows developers to adopt architectural patterns that best suit their project.
+
+Our project uses an "MVC-like" pattern because:
+
+*   **No Traditional View**: As mentioned, we don't have HTML templates. The "View" component is implicitly the JSON data returned by the API endpoints.
+*   **`util` Folder**: The `util` folder (containing `url_checker.py`) is not a standard MVC component. However, it's a common and good practice to have a place for shared helper functions that don't fit directly into the Model (data/business logic) or Controller (request handling). This further promotes the "separation of concerns."
+
+### Benefits of this Structure
+
+Adopting an MVC-like pattern, even in a flexible framework like Flask, offers significant advantages:
+
+*   **Separation of Concerns**: Each part of the application has a clear, distinct responsibility, reducing complexity.
+*   **Maintainability**: Changes in one component (e.g., updating the database schema in the Model) are less likely to break other components (like the Controller or the API response format).
+*   **Scalability**: It's easier to add new features or expand existing ones without affecting the entire application.
+*   **Testability**: Components can be tested more easily in isolation.
+*   **Readability**: The code is more organized and easier for new developers to understand.
+*   **Modularity and Reusability**: Components can potentially be reused in different parts of the application or even in other projects.  
+ 
+**Web references:**  
+  
+1. [mozilla.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxkNz4Jq1_ClJ4s6zKSxoc8Ju-uxiwHDMIn9R4Ab3Wfz22DAJJ6JquQgTqkxAlt1PIOaEvITlN6nZsUnRTscjggEuiPzGHvKkTVLiXgWfUSMechb2K74yLv9yLW7r1o2Zm-_WX3saLsusPi9K66AE=)
+2. [geeksforgeeks.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1Si_Br6uiQ6KI2R8ZY97lFf924fgfhbzmTIosyzwf9Hq1IccKNML7zboSFlXeLyg_G6S40m5QCMEHpg_OBFdhqwnWc7J9EMBS8Qv4TY0iYPNLG133kgUX1ks-R9eWS6WaGJOgXu9ALiAkBO9SVg4dtPgLGEFxXSCi)
+3. [visual-paradigm.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8ej9CHTqCNgLazIVJeXn8CSl3p0n1KzRMHqEMdjnQcP0hWfN7J0Yb9N_dhykmn60pFa_QDnZSJolgUQe3DB8CS9dZc2Il5ePYTjdQfRlhPFRGiCsFMiglm7AR036pwHCw_ABiiX5JPFTzOhl9hf80pHRUC9hrtIr3B31rAA7gOOTN2KIvrtBnvO3fNp7EIQDV0N6zhTsAp2hXYgkC)
+4. [wikipedia.org](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvZKCxEc-O5-Jv2-FLbFAXdoIZjfo72Qju7OhMbBRLnVyZO6DHsmfxE-93PSUItavQ_PXeOgweAdSoOwzqRHVh_Ay0jpWAfpqQBVWCyQm74OyTqVRTKnlCBVijbFEf0vxXaFn8hA0GI25gN2TLZTD03NbCHXBUTxh9o5x5Lw==)
+5. [youtube.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIbz5Bk5q_8KTZp8oN6UGBG1DvSiJICO66wkeUAyvlEokczNEEy-xB2iNtodCUn9wTL9t86yFXVBiwXxAbzBvA9nhtqqF9K2XP_Xzogpb9r0WgvqfI27WalbkPVd2lzQ1SUAqbYQ==)
+6. [plainenglish.io](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFt6TRIMDJqQH3v3UJYFgVTx36H9L6sUBscZKtD5saqWX3Csqt3b-82TD4qmn0A8Bk7lP9UMcR-lNB0pOPD_kM7I6HM8mMnMLOHHZgn-JysRcMuxI6hUGszAUlcjFAhqfU6HyXu8zwL2i7cFarv7fqDh1TW67wYFg-wWHjTdi7WkTIuVA=)
+7. [reddit.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHk3dxwqrzIb1s5BtrztXjDXafP7GFkxxw6x4JdWeJcTg06rGev4QMA7lTjgp9y1N_86p8GHdNF4tR2oTyEid6ehl2RUTD5QgoNWcMmmd899oqG4WeIKFtK4ov-esy1ickdaPRLnpK6Ety1OqHNwbsA6FKdCsUHl3zM4H0Y0OeChszbFmmG_7V4uccBtMN99PxJoQ==)
+8. [medium.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFbvKOzg3mEvhVVH8_jvcBQM3nxjHrDHWf1M8RL6QEWvUY4oAyf4nJo5zKR2Oz_GetyX4eIzobrd3wjP-sREZoqwBZpUzrSoAxEgcFyaBGGk_-U6qZ6pzqFRqCNE3KE9QQzOn7N6KRzCvlTWim8MinYvFmHa_L3TqOJIGE2ayA=)
+9. [medium.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYwlioboy8d3U2RvpYkoLfSQ-mSU3Qo9JZVFcDTLMY5rb2-jEu78HuxOQwQPgxnkUoBTnGcMCP0nZqH8S9ohTyC-MHsQhGxuUVV2He-kTtbT3tMpOsCSf2WCZXrwkRnPPoTwCVwaBGd4EjHUYaNzx3maSXkmtCu2611lllpguZ_9Lod34Fb7fFVj9FWQkSPVeN2E18h7VSKQ==)
+10. [ramotion.com](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERlLYfJFsCB1UWONFAYu28k_i16YWAkLonSWClgtBU-tEmzV6Nif5jfzReCCb3g2k64mR_Y3FvYgWNwm2b5s2bP-RIZ9mRbkQvexPeFukf59AKC40M0dZYSxASisg0aZG4qZ9CVqXCKQXyhPdHgjUDovtfXXzOISM3sUAB)
