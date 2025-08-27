@@ -13,9 +13,9 @@ class DatabaseConnector:
         if self.db_type == 'mysql' and not self.db_config:
             self.db_config = {
                 'host': 'localhost',
-                'database': 'amazon_scraper_db',
-                'user': 'Devuser',
-                'password': '1234'
+                'database': 'YOUR_MYSQL_DATABASE',
+                'user': 'YOUR_MYSQL_USER',
+                'password': 'YOUR_MYSQL_PASSWORD'
             }
             print("\n--- MySQL Configuration Warning ---")
             print("Default MySQL config used. Please update db_config in app.py or controller/products_controller.py with your actual MySQL credentials.")

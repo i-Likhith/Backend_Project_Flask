@@ -9,9 +9,9 @@ DB_TYPE = 'mysql' # <--- CHANGE THIS TO 'snowflake' IF YOU WANT TO USE SNOWFLAKE
 
 MYSQL_CONFIG = {
     'host': 'localhost',
-    'database': 'amazon_scraper_db',
-    'user': 'Devuser',
-    'password': '1234'
+    'database': 'YOUR_MYSQL_DATABASE',
+    'user': 'YOUR_MYSQL_USER',
+    'password': 'YOUR_MYSQL_PASSWORD'
 }
 
 SNOWFLAKE_CONFIG = {
